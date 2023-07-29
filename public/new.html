@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>HTTVideo: Upload</title>
+     <link rel="icon" type="image/x-icon" href="/favicon.png">
+  <link href="style.css" rel="stylesheet" type="text/css" />
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script defer src="upload.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div>
+  <h1 class="font-black text-4xl">Upload Video</h1>
+    <label>Video Name</label>
+    <br>
+      <input class="outline rounded-md" type="text" id="name" placeholder="My Movie">
+  <form id="uploadForm" enctype="multipart/form-data">
+      <label>Video File</label>
+      <br>
+    <input name="file" type="file" /><br>
+    <button class="hover:size-100 hover:shadow-inner hover:shadow-lg hover:bg-sky-500 hover:shadow-sky-500/50 duration-500 flex mt-[4px] font-semibold text-center bg-blue-500 text-white rounded-md py-[4px] px-[8px]" type="submit">
+    <svg class="animate-spin hidden -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+    </svg>
+    Upload
+    </button>
+  </form>
+    </div>
+</body>
+
+</html>
