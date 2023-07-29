@@ -1,4 +1,4 @@
-/node_module
+node_module/
 package.json
 package-lock.json
 .replit
