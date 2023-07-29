@@ -7,7 +7,7 @@ $("#uploadForm").on('submit', function(e) {
     
     $("svg").removeClass("hidden");
     $.ajax({
-        url: `/upload/?name=${name}`,
+        url: `/upload?name=${name}`,
         type: 'POST',
         data: formData,
         processData: false,

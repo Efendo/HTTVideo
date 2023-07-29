@@ -8,9 +8,9 @@ function Load() {
     </svg>
     Fetching Data...
     </h1>`);
-    $.get("/videos/?data=names", (data) => {
+    $.get("/videos?data=names", (data) => {
         names = data.splice(",");
-        $.get("/videos/?data=files", (data) => {
+        $.get("/videos?data=files", (data) => {
         files = data.splice(",");
         $("#Vids").html("");
         for (let i = 0; i < names.length; i++) {

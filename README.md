@@ -16,9 +16,11 @@ It stores a Key in the Replit Database called Videos that contains some json.
 - `/admin.html` is the admin panel
 
 ## System Routes
-- `/upload/?name=` uploads a file to the server with the name
-- `/videos/?data=` if the data query is "names" it return the names, if its "files" it returns the filenames else it returns a json response with "files" and "names"
-- `/delete/?passwrd=` mostly accessed from the admin panel, only deletes the db and the uploads directory if the correct password is provided
+- `/upload?name=` uploads a file to the server with the name
+- `/videos?data=` if the data query is "names" it return the names, if its "files" it returns the filenames else it returns a json response with "files" and "names"
+- `/delete?passwrd=` mostly accessed from the admin panel, only deletes the db and the uploads directory if the correct password is provided
+- `/watch?video=` used to watch a video.
+
 
 
 
