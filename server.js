@@ -7,6 +7,7 @@ const path = require('path');
 const app = express();
 const port = 80;
 let Videos = {};
+const XSSres = "Hey that request looks kinda sus! it seems like youre trying to do a XSS (Cross-Site-Scripting) attack. ";
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'uploads')));
 
@@ -18,6 +19,16 @@ const storage = multer.diskStorage({
         cb(null, file.originalname);
     }
 });
+
+// Check if data is an attemped XSS Attack
+function isXSS(data){
+    const XSS_Symbols = /"|'|\/|>|</gi;
+    try {
+        return XSS_Symbols.test(data);
+    } catch {
+        return false;
+    }
+}
 
 const fileFilter = function (req, file, cb) {
     const allowedFileTypes = [
@@ -41,8 +52,13 @@ const fileFilter = function (req, file, cb) {
 const upload = multer({ storage: storage, fileFilter: fileFilter });
 
 app.get("/watch", (req, res) => {
-    res.send(`<link rel="stylesheet" href="/watch.css"><video src="/${req.query.watch}" style="width: 100%; height: 100%; margin: 0px;" controls />`);
-} )
+    if (!isXSS(req.query.video)) {
+        res.send(`<link rel="stylesheet" href="/watch.css"><video src="/${req.query.video}" style="width: 100%; height: 100%; margin: 0px;" controls />`);
+    } else {
+        res.status(418).sendFile(path.join(__dirname, 'public', 'XSS_Inject_Response.html'));
+    }
+});
+
 app.post("/delete", async (req, res) => {
     if(req.query.passwrd === atob("MTcxMDEy")) {
         const directoryPath = path.join(__dirname, 'uploads');
@@ -67,17 +83,19 @@ app.get("/videos", (req, res) => {
 });
 
 app.post('/upload', upload.single('file'), async (req, res) => {
-
-    if (!Videos.names.includes(req.query.name) && !Videos.files.includes(req.file.filename)) {
-        Videos.names.push(req.query.name);
-        Videos.files.push(req.file.filename);
-        await db.set("Videos", Videos);
-        console.log('----- New Upload -----\n', "Data " ,Videos);
-        res.status(201).send("File uploaded successfully!");
+    if ( !isXSS(req.file.filename) ) {
+        if ( !Videos.names.includes(req.query.name) && !Videos.files.includes(req.file.filename) ) {
+            Videos.names.push(req.query.name);
+            Videos.files.push(req.file.filename);
+            await db.set("Videos", Videos);
+            console.log('----- New Upload -----\n Name: ', req.query.name, " File: ", req.file.filename);
+            res.status(201).send("File uploaded successfully!");
+        } else {
+            res.status(400).send("video of the same filename or name exists");
+        }
     } else {
-        res.status(418).send("video of the same filename or name exists");
+        res.status(418).send(XSSres);
     }
-    
 });
 
 app.get('/', async (req, res) => {
