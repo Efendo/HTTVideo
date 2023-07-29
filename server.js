@@ -69,7 +69,7 @@ app.post("/delete", async (req, res) => {
     } else {
         res.status(403).send("Your not the admin, im the admin");
     }
-    console.log('----- Full Reset -----\n', "Data " ,Videos);
+    console.log('----- Full Reset -----\n');
 });
 
 app.get("/videos", (req, res) => {
@@ -88,7 +88,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
             Videos.names.push(req.query.name);
             Videos.files.push(req.file.filename);
             await db.set("Videos", Videos);
-            console.log('----- New Upload -----\n Name: ', req.query.name, " File: ", req.file.filename);
+            console.log('----- New Upload -----\n Name: "', req.query.name, "\" File: \"", req.file.filename, '"');
             res.status(201).send("File uploaded successfully!");
         } else {
             res.status(400).send("video of the same filename or name exists");
