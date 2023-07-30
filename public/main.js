@@ -14,7 +14,7 @@ function Load() {
         files = data.splice(",");
         $("#Vids").html("");
         for (let i = 0; i < names.length; i++) {
-            $("#Vids").append(`<a class="rounded-sm font-bold bg-blue-400 text-center text-white text-center" href="/?watch=${files[i]}">${names[i]}</a><br>`);
+            $("#Vids").append(`<br><a class="rounded-sm font-bold bg-blue-400 p-[8px] text-center text-white text-center" href="/?watch=${files[i]}">${names[i]}</a><br>`);
         }
     });
   });
