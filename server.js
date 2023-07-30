@@ -51,14 +51,6 @@ const fileFilter = function (req, file, cb) {
 
 const upload = multer({ storage: storage, fileFilter: fileFilter });
 
-app.get("/watch", (req, res) => {
-    if (!isXSS(req.query.video)) {
-        res.send(`<link rel="stylesheet" href="/watch.css"><video src="/${req.query.video}" style="width: 100%; height: 100%; margin: 0px;" controls />`);
-    } else {
-        res.status(418).sendFile(path.join(__dirname, 'public', 'XSS_Inject_Response.html'));
-    }
-});
-
 app.post("/delete", async (req, res) => {
     if(req.query.passwrd === process.env['ADMIN_KEY']) {
         const directoryPath = path.join(__dirname, 'uploads');
@@ -99,7 +91,15 @@ app.post('/upload', upload.single('file'), async (req, res) => {
 });
 
 app.get('/', async (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    if(!req.query.watch){
+        res.sendFile(path.join(__dirname, 'public', 'main.html'));
+    } else {
+        if (!isXSS(req.query.watch)) {
+            res.send(`<link rel="stylesheet" href="/watch.css"><video src="/${req.query.watch}" style="width: 100%; height: 100%; margin: 0px;" controls />`);
+        } else {
+            res.status(418).sendFile(path.join(__dirname, 'public', 'XSS_Inject_Response.html'));
+        }
+    }
 });
 
 app.listen(port, async () => {
