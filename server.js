@@ -95,7 +95,7 @@ app.get('/', async (req, res) => {
         res.sendFile(path.join(__dirname, 'public', 'main.html'));
     } else {
         if (!isXSS(req.query.watch)) {
-            res.send(`<link rel="stylesheet" href="/watch.css"><video src="/${req.query.watch}" style="width: 100%; height: 100%; margin: 0px;" controls />`);
+            res.send(`<link rel="icon" type="image/x-icon" href="/favicon.png"><title>${Videos.names[Videos.files.indexOf(req.query.watch)]}</title><link rel="stylesheet" href="/watch.css"><video src="/${req.query.watch}" style="width: 100%; height: 100%; margin: 0px;" controls />`);
         } else {
             res.status(418).sendFile(path.join(__dirname, 'public', 'XSS_Inject_Response.html'));
         }
