@@ -22,7 +22,7 @@ const storage = multer.diskStorage({
 
 // Check if data is an attemped XSS Attack
 function isXSS(data){
-    const XSS_Symbols = /"|'|\/|>|</gi;
+    const XSS_Symbols = /[<>/'"]/gi;
     try {
         return XSS_Symbols.test(data);
     } catch {
@@ -60,7 +60,7 @@ app.get("/watch", (req, res) => {
 });
 
 app.post("/delete", async (req, res) => {
-    if(req.query.passwrd === atob("MTcxMDEy")) {
+    if(req.query.passwrd === process.env['ADMIN_KEY']) {
         const directoryPath = path.join(__dirname, 'uploads');
         fs.emptyDir(directoryPath);
         await db.set("Videos", { "files":[], "names":[] });
