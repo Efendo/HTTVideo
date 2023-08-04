@@ -1,3 +1,4 @@
+![HTTVideo](https://httvideo.efendo.repl.co/favicon.svg)
 # HTTVideo
 ###### *Videos over HTTP*
 
