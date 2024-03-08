@@ -1,7 +1,0 @@
-node_modules/**
-.config/**
-uploads/**
-package.json
-package-lock.json
-.replit
-replit.nix
